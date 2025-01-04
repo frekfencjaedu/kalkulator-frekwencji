@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Frekwencji</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            background-color: #f8fafc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #4f46e5;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            list-style: disc;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            display: inline-block;
+            width: 48%;
+            padding: 0.75rem;
+            margin: 0.5rem 1%;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #3b3dae;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #d73232;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f0f8ff;
+            border-left: 4px solid #4f46e5;
+            border-radius: 4px;
+        }
+
+        .result strong {
+            color: #4f46e5;
+        }
+
+        .info, .faq {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-left: 4px solid #64748b;
+            border-radius: 4px;
+            color: #555;
+        }
+
+        .faq h2 {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Frekwencji</h1>
+        <p>Za pomocą tego narzędzia możesz obliczyć swoją bieżącą frekwencję, sprawdzić, czy spełniasz minimalne wymagania, oraz dowiedzieć się, ile zajęć musisz jeszcze uczęszczać.</p>
+
+        <h2>Jak korzystać z kalkulatora?</h2>
+        <p>Wprowadź:</p>
+        <ul>
+            <li><strong>Całkowitą liczbę zajęć</strong> – liczba zajęć, które zostały dotychczas przeprowadzone.</li>
+            <li><strong>Liczbę obecności</strong> – liczba zajęć, na których byłeś obecny.</li>
+            <li><strong>Minimalną wymaganą frekwencję</strong> – procentowy próg, który musisz osiągnąć (np. 75%).</li>
+        </ul>
+
+        <p>Kliknij przycisk <strong>Oblicz</strong>, aby zobaczyć wyniki. Jeśli chcesz wyczyścić wszystkie pola, kliknij <strong>Zresetuj</strong>.</p>
+
+        <div class="form-group">
+            <label for="total-classes">Całkowita liczba zajęć:</label>
+            <input type="number" id="total-classes" min="1" value="100">
+        </div>
+        <div class="form-group">
+            <label for="classes-attended">Liczba obecności:</label>
+            <input type="number" id="classes-attended" min="0" value="0">
+        </div>
+        <div class="form-group">
+            <label for="minimum-attendance">Minimalna frekwencja (%):</label>
+            <input type="number" id="minimum-attendance" min="0" max="100" value="75">
+        </div>
+        <div>
+            <button class="btn-primary" onclick="calculateAttendance()">Oblicz</button>
+            <button class="btn-danger" onclick="resetCalculator()">Zresetuj</button>
+        </div>
+        <div id="result" class="result" style="display: none;"></div>
+
+        <div class="info">
+            <h2>Dlaczego ważne jest monitorowanie frekwencji?</h2>
+            <p>
+                Frekwencja jest kluczem do sukcesu akademickiego. Wiele instytucji wymaga minimalnego procentu obecności, aby móc przystąpić do egzaminów końcowych. Dzięki temu <a href="https://countingtools.com/attendance-calculator/pl/">kalkulator frekwencji</a> możesz upewnić się, że spełniasz wymagania i odpowiednio zaplanować swoją obecność.
+            </p>
+        </div>
+
+        <div class="faq">
+            <h2>Najczęściej zadawane pytania</h2>
+            <p><strong>Pytanie 1:</strong> Co zrobić, jeśli moja frekwencja jest za niska?</p>
+            <p>Staraj się uczestniczyć we wszystkich pozostałych zajęciach i dokładnie monitorować swoją frekwencję za pomocą tego kalkulatora. Jeśli masz pytania, skontaktuj się z wykładowcą lub administracją.</p>
+
+            <p><strong>Pytanie 2:</strong> Czy mogę zmienić minimalny próg frekwencji?</p>
+            <p>Tak, wprowadź wartość procentową w polu "Minimalna frekwencja", aby dostosować ją do wymagań swojej instytucji.</p>
+
+            <p><strong>Pytanie 3:</strong> Co oznacza "Brakuje zajęć" w wynikach?</p>
+            <p>To liczba zajęć, które musisz jeszcze uczęszczać, aby osiągnąć minimalny wymagany poziom frekwencji.</p>
+        </div>
+    </div>
+
+    <script>
+        function calculateAttendance() {
+            const totalClasses = parseInt(document.getElementById('total-classes').value);
+            const classesAttended = parseInt(document.getElementById('classes-attended').value);
+            const minimumAttendance = parseInt(document.getElementById('minimum-attendance').value);
+
+            if (isNaN(totalClasses) || isNaN(classesAttended) || isNaN(minimumAttendance)) {
+                alert("Proszę wprowadzić prawidłowe wartości!");
+                return;
+            }
+
+            if (classesAttended > totalClasses) {
+                alert("Liczba obecności nie może być większa niż liczba zajęć!");
+                return;
+            }
+
+            const attendancePercentage = (classesAttended / totalClasses) * 100;
+            const requiredClasses = Math.ceil((minimumAttendance * totalClasses) / 100);
+            const classesNeeded = Math.max(0, requiredClasses - classesAttended);
+
+            let resultMessage = `<strong>Obecna frekwencja:</strong> ${attendancePercentage.toFixed(1)}%<br>`;
+            if (attendancePercentage >= minimumAttendance) {
+                resultMessage += "Twoja frekwencja spełnia wymagania.";
+            } else {
+                resultMessage += `Brakuje ${classesNeeded} zajęć, aby osiągnąć wymaganą frekwencję.`;
+            }
+
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').innerHTML = resultMessage;
+        }
+
+        function resetCalculator() {
+            document.getElementById('total-classes').value = "100";
+            document.getElementById('classes-attended').value = "0";
+            document.getElementById('minimum-attendance').value = "75";
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('result').innerHTML = "";
+        }
+    </script>
+</body>
+</html>
